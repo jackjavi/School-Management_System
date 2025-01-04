@@ -84,7 +84,7 @@ const ManageFees = () => {
             >
               <option value="">Select Method</option>
               <option value="mpesa">Mpesa</option>
-              <option value="cash">Cash</option>
+
               <option value="bank">Bank</option>
             </select>
           </div>
