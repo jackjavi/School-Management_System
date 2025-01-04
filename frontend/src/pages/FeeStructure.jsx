@@ -10,8 +10,8 @@ const FeeStructure = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const [feeStructures, setFeeStructures] = useState([]); // Fee structures list
-  const [loadingStructures, setLoadingStructures] = useState(true); // Loading indicator for structures
+  const [feeStructures, setFeeStructures] = useState([]);
+  const [loadingStructures, setLoadingStructures] = useState(true);
   const navigate = useNavigate();
 
   const fetchFeeStructures = async () => {
@@ -59,12 +59,34 @@ const FeeStructure = () => {
       setAmount("");
       setYear("");
 
-      // Refresh fee structures after adding
       fetchFeeStructures();
     } catch (err) {
       setError(err.response?.data?.message || "Failed to update fees.");
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    if (
+      !window.confirm("Are you sure you want to delete this fee structure?")
+    ) {
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem("authToken");
+      await axios.delete(
+        `${process.env.REACT_APP_BACKEND_URL}/api/v1/fees/${id}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setSuccessMessage("Fee structure deleted successfully.");
+      fetchFeeStructures();
+    } catch (err) {
+      console.error("Error deleting fee structure:", err);
+      setError(
+        err.response?.data?.message || "Failed to delete fee structure."
+      );
     }
   };
 
@@ -167,6 +189,7 @@ const FeeStructure = () => {
                 <th className="px-4 py-2 text-indigo-800">Term</th>
                 <th className="px-4 py-2 text-indigo-800">Amount</th>
                 <th className="px-4 py-2 text-indigo-800">Year</th>
+                <th className="px-4 py-2 text-indigo-800">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -180,6 +203,14 @@ const FeeStructure = () => {
                   <td className="px-4 py-2">{fee.term}</td>
                   <td className="px-4 py-2">{fee.amount}</td>
                   <td className="px-4 py-2">{fee.year}</td>
+                  <td className="px-4 py-2">
+                    <button
+                      onClick={() => handleDelete(fee.id)}
+                      className="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600 transition duration-300"
+                    >
+                      Delete
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>

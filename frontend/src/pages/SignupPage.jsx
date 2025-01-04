@@ -84,12 +84,6 @@ function SignupPage() {
 
         <p className="error">{errorMessage}</p>
 
-        <p>
-          Already have an account?{" "}
-          <Link to={"/login"}>
-            <span className="underline">Login.</span>
-          </Link>
-        </p>
         <button className="w-full p-2 rounded bg-green-600 hover:bg-purple-500 transition-colors font-bold ">
           Create User
         </button>
