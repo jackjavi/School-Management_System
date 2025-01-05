@@ -197,7 +197,7 @@ const EditProfile = () => {
             >
               Save Changes
             </button>
-            {/* Delete Profile Button */}
+            {/* Delete Profile Button 
             <div className="mt-6">
               <button
                 type="button"
@@ -206,7 +206,7 @@ const EditProfile = () => {
               >
                 Delete Profile
               </button>
-            </div>
+            </div>*/}
           </div>
         </form>
       </div>

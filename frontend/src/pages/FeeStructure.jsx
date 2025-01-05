@@ -204,12 +204,12 @@ const FeeStructure = () => {
                   <td className="px-4 py-2">{fee.amount}</td>
                   <td className="px-4 py-2">{fee.year}</td>
                   <td className="px-4 py-2">
-                    <button
+                    {/*<button
                       onClick={() => handleDelete(fee.id)}
                       className="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600 transition duration-300"
                     >
                       Delete
-                    </button>
+                    </button>*/}
                   </td>
                 </tr>
               ))}

@@ -119,6 +119,33 @@ function UsersContextWrapper({ children }) {
           console.error(err);
           alert("Failed to update role. Please try again.");
         });
+
+      // Ask admin if the fee structure exists for the selected category
+      const confirmFeeStructure = window.confirm(
+        `Have you already saved the fee structure for the category "${feeCategory}" for this term? click cancel if not.`
+      );
+
+      if (confirmFeeStructure) {
+        const feeAmountInput = prompt(
+          `Enter the amount of fees for the current term for the category "${feeCategory}":`
+        );
+
+        // Validate the fee amount
+        const feeAmount = parseFloat(feeAmountInput);
+        if (isNaN(feeAmount) || feeAmount <= 0) {
+          alert("Invalid fee amount. Please enter a positive number.");
+          return;
+        }
+
+        // Update the student's fee balance
+        await axios.put(
+          `${process.env.REACT_APP_BACKEND_URL}/api/v1/members/profile-edit`,
+          { userId, feeBalance: feeAmount },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+
+        alert("Fee balance updated successfully.");
+      }
     }
   }
 
